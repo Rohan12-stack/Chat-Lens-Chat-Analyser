@@ -5,13 +5,70 @@ import seaborn as sns
 from mpl_toolkits.mplot3d import Axes3D  # for 3D bar if needed
 import numpy as np
 import matplotlib
+import base64
 
 # Fix emoji rendering
 matplotlib.rcParams['font.family'] = 'Segoe UI Emoji'
 
-st.sidebar.title("Whatsapp Chat Analyzer")
 
-uploaded_file = st.sidebar.file_uploader("Done by Rohan B")
+# ----------------- Background Image Setup -----------------
+def add_bg_from_local(image_file):
+    with open(image_file, "rb") as f:
+        encoded_image = base64.b64encode(f.read()).decode()
+    st.markdown(
+        f"""
+        <style>
+        .stApp {{
+            background-image: url("data:image/png;base64,{encoded_image}");
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }}
+        .stApp::before {{
+            content: "";
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-color: rgba(0, 0, 0, 0.4); /* dark overlay */
+            z-index: 0;
+        }}
+        </style>
+        """,
+        unsafe_allow_html=True
+    )
+
+# Use your local image file in same directory
+add_bg_from_local("bg.png")
+
+
+# ----------------- Custom Title & Subtitle -----------------
+st.markdown(
+    """
+    <div style="text-align:center; padding-top: 10px;">
+        <h1 style="font-size: 90px; color: white; font-weight: bold;">
+            Chat <span style="color:#ff4d4d;">Lens 🗪</span>
+        </h1>
+        <h4 style="font-size: 22px; color: #cccccc; font-style: italic;">
+            Analyze . Visualize . Understand your chats
+        </h4>
+        <div style='margin-top: 60px;'></div>
+    </div>
+    """,
+    unsafe_allow_html=True
+)
+
+
+# ----------------- Streamlit Sidebar -----------------
+st.sidebar.markdown(
+    """
+    <h1 style='text-align: center; font-size: 48px; color: white;'>
+        C<span style='color: #ff4b4b;'>L🗪</span>
+    </h1>
+    """,
+    unsafe_allow_html=True
+)
+
+
+uploaded_file = st.sidebar.file_uploader("Done by Innobotics")
 if uploaded_file is not None:
     bytes_data = uploaded_file.getvalue()
     data = bytes_data.decode("utf-8")
@@ -34,13 +91,13 @@ if uploaded_file is not None:
         col1, col2, col3, col4 = st.columns(4)
 
         with col1:
-            st.markdown(f"<div style='text-align:center; font-size:20px;'><b>Total Messages</b><br><span style='font-size:28px;'><b>{num_messages}</b></span></div>", unsafe_allow_html=True)
+            st.markdown(f"<div style='text-align:center; font-size:20px; color:white;'><b>Total Messages</b><br><span style='font-size:28px;'><b>{num_messages}</b></span></div>", unsafe_allow_html=True)
         with col2:
-            st.markdown(f"<div style='text-align:center; font-size:20px;'><b>Total Words</b><br><span style='font-size:28px;'><b>{words}</b></span></div>", unsafe_allow_html=True)
+            st.markdown(f"<div style='text-align:center; font-size:20px; color:white;'><b>Total Words</b><br><span style='font-size:28px;'><b>{words}</b></span></div>", unsafe_allow_html=True)
         with col3:
-            st.markdown(f"<div style='text-align:center; font-size:20px;'><b>Media Shared</b><br><span style='font-size:28px;'><b>{num_media_messages}</b></span></div>", unsafe_allow_html=True)
+            st.markdown(f"<div style='text-align:center; font-size:20px; color:white;'><b>Media Shared</b><br><span style='font-size:28px;'><b>{num_media_messages}</b></span></div>", unsafe_allow_html=True)
         with col4:
-            st.markdown(f"<div style='text-align:center; font-size:20px;'><b>Links Shared</b><br><span style='font-size:28px;'><b>{num_links}</b></span></div>", unsafe_allow_html=True)
+            st.markdown(f"<div style='text-align:center; font-size:20px; color:white;'><b>Links Shared</b><br><span style='font-size:28px;'><b>{num_links}</b></span></div>", unsafe_allow_html=True)
 
         # ----------------- Monthly Timeline -----------------
         st.title("Monthly Timeline")
@@ -135,7 +192,7 @@ if uploaded_file is not None:
             autopct="%1.1f%%",
             startangle=90,
             colors=colors,
-            wedgeprops={'width':0.4}
+            wedgeprops={'width': 0.4}
         )
         for autotext in autotexts:
             autotext.set_fontsize(10)
@@ -152,7 +209,7 @@ if uploaded_file is not None:
         ax.set(aspect="equal")
         st.pyplot(fig)
 
-        # ----------------- Sentiment Analysis (Bar Graph, % Perspective) -----------------
+        # ----------------- Sentiment Analysis -----------------
         st.title("Sentiment Analysis")
         model, vectorizer = preprocessor.train_sentiment_model(df)
         sentiment_df = helper.sentiment_analysis(selected_user, df, model, vectorizer)
