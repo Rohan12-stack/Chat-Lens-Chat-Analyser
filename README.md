@@ -125,7 +125,7 @@ ChatLens demonstrates high accuracy in sentiment prediction, with classification
 3. Run the app:
    ```
    pip install -r requirements.txt
-   py app.py  
+   streamlit run app.py     
    
    ```
 ### Deployment
@@ -134,7 +134,7 @@ Go through my website using this link - [ChatLens](https://chat-lens.streamlit.a
 
 or scan the QR Code
 <p align="left">
-  <img src="resources/CVqrcode.png" alt="UI" width="150">
+  <img src="resources/CLqrcode.png" alt="UI" width="150">
   <br>
 </p>
 
