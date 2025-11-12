@@ -5,9 +5,9 @@
 ChatLens is an intelligent chat analysis tool that processes exported WhatsApp or Telegram chats to extract insights using NLP techniques. It visualizes patterns like message frequency, activity trends, and emotional tone. Built with Streamlit, it provides an interactive, user-friendly interface for real-time exploration. The tool automatically structures chat data into a readable format. Overall, it helps users understand their communication behavior through visual analytics.
 
 <p align="center">
-  <img src="resources/chatlensfrontend.png" alt="UI" width="300">
+  <img src="resources/chatlensfrontend.png" alt="UI" width="450">
   <br>
-  
+  <em>User Interface</em>
 </p>
 
 ## Features
